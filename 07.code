@@ -1,0 +1,91 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+int GCD (int num1, int num2);				/*finds Greatest common divisor for two integers num1 and num2*/
+void MatrixRowShiftLeft (int size, int *matrix);	/*Shifts left numbers in a row of a matrix*/
+void RandomArrayFill (int size, int *array);		/*Fills an array with random numbers between 0 and 10*/
+void ArrayOutput (int size, int *array);		/*Outputs an array on screen*/
+
+int main()
+{
+#define N 3						/*size of a matrix*/
+
+	int num1, num2;					/*numbers num1 and num2 to find GCD for*/
+	int gcd;					/*Variable for GCD*/
+	int matrix[N][N];
+
+	printf("Please, write the first number to count GCD for\n");
+	scanf("%d", &num1);				/*write integer number from keyboard to num1*/
+
+	printf("Please, write the second number to count GCD for\n");
+	scanf("%d", &num2);				/*write integer number from keyboard to num2*/
+
+	gcd = GCD(num1, num2);  			/*write retrurn of a GCD function into a gcd variable*/
+        printf("The result of a GCD is:\n%d\n", gcd);	/*show on screen the result of a GCD funcrion*/
+
+	RandomArrayFill(N, (int*) matrix);
+	printf("Your default matrix filled with random numbers is:\n");
+	ArrayOutput(N, (int*) matrix);
+
+	MatrixRowShiftLeft(N, (int*) matrix);
+	printf("Your shifted matrix filled with random numbers is:\n");
+	ArrayOutput(N, (int*) matrix);
+
+	return 0;
+}
+
+int GCD (int num1, int num2)
+{
+	int r = 0;
+	int result;
+
+	do
+	{
+		r = num1%num2;
+		num1 = num2;
+		result = num1;
+		num2 = r;
+	}
+	while (r != 0);
+
+	return result;
+}
+
+void MatrixRowShiftLeft (int size, int *matrix)
+{
+	for (int i = 0, memory = 0; i < size; i++)
+	{
+		memory = matrix[i * size];
+		for (int j = 0; j < size; j++)
+		{
+			matrix[i * size + j] = matrix[i * size + j + 1];
+		}
+
+		matrix[i * size + (size - 1)] = memory;
+	}
+}
+
+void RandomArrayFill (int size, int *array)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			array[i * size + j] = rand()% 10;
+		}
+	}
+}
+
+void ArrayOutput (int size, int *array)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			printf("%d\t", array[i * size + j]);
+		}
+		printf("\n");
+	}
+
+	printf("\n");
+}
